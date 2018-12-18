@@ -1,8 +1,10 @@
 package com.igniubi.mapper.controller;
 
+import com.igniubi.mapper.model.DatabaseInfo;
 import com.igniubi.mapper.service.DatabaseInfoService;
 import com.igniubi.model.CommonRsp;
 import com.igniubi.model.dtos.common.ResultDTO;
+import com.igniubi.model.enums.common.ResultEnum;
 import org.hibernate.validator.constraints.pl.REGON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +30,7 @@ public class TestController {
     @RequestMapping("/getDatabase")
     @ResponseBody
     public ResultDTO register(){
-        return new ResultDTO();
+        DatabaseInfo data = databaseInfoService.get(1);
+        return new ResultDTO(ResultEnum.OK.getCode(), ResultEnum.OK.getMsg(), data);
     }
 }
