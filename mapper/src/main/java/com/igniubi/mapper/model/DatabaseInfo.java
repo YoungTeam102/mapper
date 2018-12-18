@@ -53,6 +53,16 @@ public class DatabaseInfo extends BaseEntity{
      */
     private String deleted;
 
+    public DatabaseInfo(){}
+
+    public DatabaseInfo(String selfDefineName, String databaseName, String databaseAddress, String databasePort, String databaseType, String packageUrl) {
+        this.selfDefineName = selfDefineName;
+        this.databaseName = databaseName;
+        this.databaseAddress = databaseAddress;
+        this.databasePort = databasePort;
+        this.databaseType = databaseType;
+        this.packageUrl = packageUrl;
+    }
 
     public Integer getId() { return id; }
 

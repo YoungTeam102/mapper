@@ -20,11 +20,26 @@
       id, self_define_name, database_name, database_address, database_port, database_type, package_url, created_at, updated_at, deleted
     </sql>
 
+    <insert id="save" useGeneratedKeys="true" parameterType="com.igniubi.mapper.model.DatabaseInfo">
+        insert into database_info(self_define_name, database_name, database_address, database_port, database_type, package_url)
+        values(#{selfDefineName}, #{databaseName}, #{databaseAddress}, #{databasePort}, #{databaseType}, #{packageUrl});
+    </insert>
+
     <select id="get" resultMap="databaseInfoMap" parameterType="java.lang.Integer">
         SELECT
         <include refid="Base_Column_List"/>
         FROM database_info
         where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="listDatabaseInfo" resultMap="databaseInfoMap" parameterType="com.igniubi.mapper.dto.req.DatabaseInfoQueryReq">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM database_info
+        where deleted = '0'
+        <if test="databaseName != null">
+            AND database_name = #{databaseName}
+        </if>
     </select>
 
 </mapper>
