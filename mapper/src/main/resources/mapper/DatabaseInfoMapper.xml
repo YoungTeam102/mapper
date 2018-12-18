@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.igniubi.mapper.mapper.DatabaseInfoMapper">
+
+    <resultMap id="databaseInfoMap" type="com.igniubi.mapper.model.DatabaseInfo">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="selfDefineName" column="self_define_name" jdbcType="VARCHAR"/>
+        <result property="databaseName" column="database_name" jdbcType="VARCHAR"/>
+        <result property="databaseAddress" column="database_address" jdbcType="VARCHAR"/>
+        <result property="databasePort" column="database_port" jdbcType="VARCHAR"/>
+        <result property="databaseType" column="database_type" jdbcType="VARCHAR"/>
+        <result property="packageUrl" column="package_url" jdbcType="VARCHAR"/>
+        <result property="createdAt" column="created_at" jdbcType="VARCHAR"/>
+        <result property="updatedAt" column="updated_at" jdbcType="VARCHAR"/>
+        <result property="deleted" column="deleted" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+      id, self_define_name, database_name, database_address, database_port, database_type, package_url, created_at, updated_at, deleted
+    </sql>
+
+    <select id="get" resultMap="databaseInfoMap" parameterType="java.lang.Integer">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM database_info
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+</mapper>
