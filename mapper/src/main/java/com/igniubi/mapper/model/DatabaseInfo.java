@@ -47,7 +47,7 @@ public class DatabaseInfo extends BaseEntity{
     /**
      * 最后更新时间
      */
-    private String updatedAt;
+        private String updatedAt;
     /**
      * 是否删除 1=已删除 0=未删除
      */

@@ -1,0 +1,22 @@
+package ${package}.service.impl;
+
+import org.springframework.beans.factory.InitializingBean;
+import ${package}.service.impl.BaseServiceImpl;;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import ${package}.mapper.${className}Mapper;
+import ${package}.entity.${className}Entity;
+import ${package}.service.${className}Service;
+
+
+@Service("${classname}Service")
+public class ${className}ServiceImpl extends BaseServiceImpl<${pkType}, ${className}Entity> implements ${className}Service, InitializingBean {
+
+	@Autowired
+	private ${className}Mapper ${classname}Mapper;
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        this.setBaseMapper(${classname}Mapper);
+    }
+}

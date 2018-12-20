@@ -1,0 +1,15 @@
+package ${package}.service;
+
+import ${package}.entity.${className}Entity;
+
+
+/**
+ * ${tableComment}
+ * 
+ * @author ${author}
+ * @email ${email}
+ * @date ${datetime}
+ */
+public interface ${className}Service extends BaseService<${pkType}, ${className}Entity>{
+
+}

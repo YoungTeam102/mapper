@@ -1,9 +1,7 @@
 package com.igniubi.mapper.service;
 
-import com.igniubi.common.page.PagerInfo;
-import com.igniubi.mapper.dto.req.DatabaseInfoQueryReq;
+import com.igniubi.mapper.dto.DatabaseInfoQueryReq;
 import com.igniubi.mapper.model.DatabaseInfo;
-import com.igniubi.model.dtos.common.ResultDTO;
 import com.igniubi.mybatis.service.BaseService;
 
 import java.util.List;

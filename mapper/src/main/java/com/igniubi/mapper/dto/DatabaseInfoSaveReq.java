@@ -1,4 +1,4 @@
-package com.igniubi.mapper.dto.req;
+package com.igniubi.mapper.dto;
 
 import com.igniubi.model.dtos.common.BaseDTO;
 

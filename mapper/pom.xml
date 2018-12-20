@@ -11,7 +11,6 @@
 
     <name>mapper</name>
 
-
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -36,6 +35,11 @@
             <artifactId>mybatis</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <!-- 添加 thymeleaf 模板引擎 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -46,6 +50,5 @@
             </plugin>
         </plugins>
     </build>
-
 
 </project>

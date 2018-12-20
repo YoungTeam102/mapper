@@ -1,8 +1,8 @@
 package com.igniubi.mapper.business;
 
 import com.igniubi.common.page.PagerInfo;
-import com.igniubi.mapper.dto.req.DatabaseInfoQueryReq;
-import com.igniubi.mapper.dto.req.DatabaseInfoSaveReq;
+import com.igniubi.mapper.dto.DatabaseInfoQueryReq;
+import com.igniubi.mapper.dto.DatabaseInfoSaveReq;
 import com.igniubi.mapper.model.DatabaseInfo;
 import com.igniubi.model.dtos.common.ResultDTO;
 

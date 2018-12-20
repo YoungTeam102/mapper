@@ -1,6 +1,6 @@
 package com.igniubi.mapper.mapper;
 
-import com.igniubi.mapper.dto.req.DatabaseInfoQueryReq;
+import com.igniubi.mapper.dto.DatabaseInfoQueryReq;
 import com.igniubi.mapper.model.DatabaseInfo;
 import com.igniubi.mybatis.mapper.BaseMapper;
 

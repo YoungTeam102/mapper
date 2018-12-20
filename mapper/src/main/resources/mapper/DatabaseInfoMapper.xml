@@ -32,7 +32,7 @@
         where id = #{id,jdbcType=INTEGER}
     </select>
 
-    <select id="listDatabaseInfo" resultMap="databaseInfoMap" parameterType="com.igniubi.mapper.dto.req.DatabaseInfoQueryReq">
+    <select id="listDatabaseInfo" resultMap="databaseInfoMap" parameterType="com.igniubi.mapper.dto.DatabaseInfoQueryReq">
         SELECT
         <include refid="Base_Column_List"/>
         FROM database_info
