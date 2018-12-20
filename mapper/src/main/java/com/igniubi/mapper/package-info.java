@@ -6,6 +6,11 @@
  * service: 基础增删改业务接口
  * business: 基于基础service上处理业务逻辑接口
  * controller: 控制器
+ *
+ * resource.mapper: mapper.xml
+ * resource.static: 静态资源(自定义js、layui插件)
+ * resource.templates: velocity和thymeleaf模板文件
+ *
  * <p>
  *
  * @author  徐擂
