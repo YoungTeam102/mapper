@@ -33,9 +33,17 @@ public class DatabaseInfo extends BaseEntity{
      */
     private String databasePort;
     /**
-     * 数据库类型
+     * 用户名
      */
-    private String databaseType;
+    private String userName;
+    /**
+     * 密码
+     */
+    private String password;
+    /**
+     * 数据库类型 mysql:1 oracle:2
+     */
+    private Integer databaseType;
     /**
      * 生成包路径
      */
@@ -47,7 +55,7 @@ public class DatabaseInfo extends BaseEntity{
     /**
      * 最后更新时间
      */
-        private String updatedAt;
+    private String updatedAt;
     /**
      * 是否删除 1=已删除 0=未删除
      */
@@ -55,7 +63,7 @@ public class DatabaseInfo extends BaseEntity{
 
     public DatabaseInfo(){}
 
-    public DatabaseInfo(String selfDefineName, String databaseName, String databaseAddress, String databasePort, String databaseType, String packageUrl) {
+    public DatabaseInfo(String selfDefineName, String databaseName, String databaseAddress, String databasePort, Integer databaseType, String packageUrl) {
         this.selfDefineName = selfDefineName;
         this.databaseName = databaseName;
         this.databaseAddress = databaseAddress;
@@ -84,9 +92,9 @@ public class DatabaseInfo extends BaseEntity{
 
     public void setDatabasePort(String databasePort) { this.databasePort = databasePort; }
 
-    public String getDatabaseType() { return databaseType; }
+    public Integer getDatabaseType() { return databaseType; }
 
-    public void setDatabaseType(String databaseType) { this.databaseType = databaseType; }
+    public void setDatabaseType(Integer databaseType) { this.databaseType = databaseType; }
 
     public String getPackageUrl() { return packageUrl; }
 
@@ -97,6 +105,14 @@ public class DatabaseInfo extends BaseEntity{
     public void setCreatedAt(String createdAt) { this.createdAt = createdAt; }
 
     public String getUpdatedAt() { return updatedAt; }
+
+    public String getUserName() { return userName; }
+
+    public void setUserName(String userName) { this.userName = userName; }
+
+    public String getPassword() { return password; }
+
+    public void setPassword(String password) { this.password = password; }
 
     public void setUpdatedAt(String updatedAt) { this.updatedAt = updatedAt; }
 

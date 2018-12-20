@@ -35,6 +35,11 @@
             <artifactId>mybatis</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.igniubi.core</groupId>
+            <artifactId>redis</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <!-- 添加 thymeleaf 模板引擎 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

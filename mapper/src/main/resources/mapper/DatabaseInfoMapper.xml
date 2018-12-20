@@ -9,7 +9,9 @@
         <result property="databaseName" column="database_name" jdbcType="VARCHAR"/>
         <result property="databaseAddress" column="database_address" jdbcType="VARCHAR"/>
         <result property="databasePort" column="database_port" jdbcType="VARCHAR"/>
-        <result property="databaseType" column="database_type" jdbcType="VARCHAR"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="databaseType" column="database_type" />
         <result property="packageUrl" column="package_url" jdbcType="VARCHAR"/>
         <result property="createdAt" column="created_at" jdbcType="VARCHAR"/>
         <result property="updatedAt" column="updated_at" jdbcType="VARCHAR"/>
@@ -17,12 +19,12 @@
     </resultMap>
 
     <sql id="Base_Column_List" >
-      id, self_define_name, database_name, database_address, database_port, database_type, package_url, created_at, updated_at, deleted
+      id, self_define_name, database_name, database_address, database_port, user_name, password, database_type, package_url, created_at, updated_at, deleted
     </sql>
 
     <insert id="save" useGeneratedKeys="true" parameterType="com.igniubi.mapper.model.DatabaseInfo">
-        insert into database_info(self_define_name, database_name, database_address, database_port, database_type, package_url)
-        values(#{selfDefineName}, #{databaseName}, #{databaseAddress}, #{databasePort}, #{databaseType}, #{packageUrl});
+        insert into database_info(self_define_name, database_name, database_address, database_port, user_name, password, database_type, package_url)
+        values(#{selfDefineName}, #{databaseName}, #{databaseAddress}, #{databasePort}, #{userName}, #{password}, #{databaseType}, #{packageUrl});
     </insert>
 
     <select id="get" resultMap="databaseInfoMap" parameterType="java.lang.Integer">

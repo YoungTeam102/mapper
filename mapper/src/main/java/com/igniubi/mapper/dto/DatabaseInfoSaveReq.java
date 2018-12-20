@@ -24,7 +24,7 @@ public class DatabaseInfoSaveReq extends BaseDTO {
     /**
      * 数据库类型
      */
-    private String databaseType;
+    private Integer databaseType;
     /**
      * 生成包路径
      */
@@ -62,11 +62,11 @@ public class DatabaseInfoSaveReq extends BaseDTO {
         this.databasePort = databasePort;
     }
 
-    public String getDatabaseType() {
+    public Integer getDatabaseType() {
         return databaseType;
     }
 
-    public void setDatabaseType(String databaseType) {
+    public void setDatabaseType(Integer databaseType) {
         this.databaseType = databaseType;
     }
 
