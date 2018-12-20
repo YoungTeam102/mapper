@@ -22,6 +22,24 @@
       id, self_define_name, database_name, database_address, database_port, user_name, password, database_type, package_url, created_at, updated_at, deleted
     </sql>
 
+    <update id="update" parameterType="com.igniubi.mapper.model.DatabaseInfo">
+        update database_info
+        set
+        self_define_name = #{selfDefineName},
+        database_name = #{databaseName},
+        database_address = #{databaseAddress},
+        database_port = #{databasePort},
+        user_name = #{userName},
+        password = #{password},
+        database_type = #{databaseType},
+        package_url = #{packageUrl} 
+        where id = #{id}
+
+    </update>
+    <update id="remove" parameterType="java.lang.Integer">
+        delete from database_info where id = #{id}
+    </update>
+
     <insert id="save" useGeneratedKeys="true" parameterType="com.igniubi.mapper.model.DatabaseInfo">
         insert into database_info(self_define_name, database_name, database_address, database_port, user_name, password, database_type, package_url)
         values(#{selfDefineName}, #{databaseName}, #{databaseAddress}, #{databasePort}, #{userName}, #{password}, #{databaseType}, #{packageUrl});

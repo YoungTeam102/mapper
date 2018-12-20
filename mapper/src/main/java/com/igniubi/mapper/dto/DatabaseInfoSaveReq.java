@@ -5,6 +5,8 @@ import com.igniubi.model.dtos.common.BaseDTO;
 
 public class DatabaseInfoSaveReq extends BaseDTO {
 
+    private Integer id;
+
     /**
      * 自定义名称
      */
@@ -29,6 +31,22 @@ public class DatabaseInfoSaveReq extends BaseDTO {
      * 生成包路径
      */
     private String packageUrl;
+
+    private String userName;
+
+    private String password;
+
+    public Integer getId() { return id; }
+
+    public void setId(Integer id) { this.id = id; }
+
+    public String getUserName() { return userName; }
+
+    public void setUserName(String userName) { this.userName = userName; }
+
+    public String getPassword() { return password; }
+
+    public void setPassword(String password) { this.password = password; }
 
     public String getSelfDefineName() {
         return selfDefineName;

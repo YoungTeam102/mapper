@@ -13,13 +13,14 @@ layui.config({
         var opType = $("#opType").val();
         $.ajax({
             type: 'POST',
-            url: _contextPath+"/dbs/"+opType,
+            url: "/mapper/database/"+opType,
             contentType: "application/json;charset=utf-8",
             data: JSON.stringify(data.field),
             success: function (result) {
                 console.log(result.code)
                 if(result.code == 200){
                     layer.msg("保存/更新成功");
+                    setTimeout(window.parent.location.href = "/mapper/to/databaseList", 1000);
                 }else {
                     layer.msg(result.message);
                 }

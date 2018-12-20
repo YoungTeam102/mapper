@@ -17,10 +17,12 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 类说明
+ * jdbc 对象维护接口
  * <p>
  *
  * @author 徐擂
@@ -30,8 +32,11 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class JdbcTemplateServiceImpl implements JdbcTemplateService {
 
-    @Autowired
-    private RedisValueOperations redisTemplate;
+    /**
+     * 维护一个map，用于缓存连接对象
+     */
+    private static Map<String, Object> cacheTemplate = new HashMap<>();
+
 
     /**
      * 获取jdbc数据连接
@@ -43,16 +48,16 @@ public class JdbcTemplateServiceImpl implements JdbcTemplateService {
      * @date 2018-12-20
      */
     @Override
-    public JdbcTemplate getJdbcTemplate(DatabaseInfo databaseInfo){
-        // 组装redis-key
-        RedisKeyBuilder redisKeyBuilder = RedisKeyBuilder.newInstance().appendFixed(DatabaseEnum.REDIS_KEY_FIX.getCacheKey()).
-                appendVar(RedisKeyConstant.JDBC_TEMPLATE + getKey(databaseInfo));
-        // 缓存中有则优先从redis拿
-        JdbcTemplate jdbcTemplate = redisTemplate.get(redisKeyBuilder, JdbcTemplate.class);
+
+    public JdbcTemplate getJdbcTemplate(DatabaseInfo databaseInfo) {
+        // 组装cache-key
+        String cacheKey = getKey(databaseInfo);
+        // 缓存中有则优先从缓存拿
+        JdbcTemplate jdbcTemplate = (JdbcTemplate) cacheTemplate.get(cacheKey);
         if (jdbcTemplate == null) {
             // 否则获取连接
             jdbcTemplate = new JdbcTemplate(createDataSource(databaseInfo));
-            redisTemplate.set(redisKeyBuilder, jdbcTemplate, DatabaseEnum.REDIS_KEY_FIX.getCacheTime(), DatabaseEnum.REDIS_KEY_FIX.getTimeUnit());
+            cacheTemplate.put(cacheKey, jdbcTemplate);
         }
         return jdbcTemplate;
     }
@@ -66,7 +71,7 @@ public class JdbcTemplateServiceImpl implements JdbcTemplateService {
      * @version 1.0.0
      * @date 2018-12-20
      */
-    private DataSource createDataSource(DatabaseInfo databaseInfo){
+    private DataSource createDataSource(DatabaseInfo databaseInfo) {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(DateSourceConstant.JDBC_DRIVER_CLASS);
         dataSource.setUrl(getJdbcUrl(databaseInfo));
@@ -77,13 +82,14 @@ public class JdbcTemplateServiceImpl implements JdbcTemplateService {
 
     /**
      * 拼装jdbc url  oracle暂不支持
+     *
      * @param databaseInfo
      * @return
      * @author 徐擂
      * @version 1.0.0
      * @date 2018-12-20
      */
-    private String getJdbcUrl(DatabaseInfo databaseInfo){
+    private String getJdbcUrl(DatabaseInfo databaseInfo) {
         StringBuilder urlBuf = new StringBuilder("jdbc:");
         if (databaseInfo.getDatabaseType().equals(DateSourceConstant.JDBC_TYPE_MYSQL)) {
             urlBuf.append("mysql://");
@@ -102,7 +108,8 @@ public class JdbcTemplateServiceImpl implements JdbcTemplateService {
      * @version 1.0.0
      * @date 2018-12-20
      */
-    private String getKey(DatabaseInfo databaseInfo){
-        return databaseInfo.getDatabaseAddress() + RedisKeyBuilder.SEPARATOR_MH + databaseInfo.getDatabasePort() + RedisKeyBuilder.SEPARATOR_MH + databaseInfo.getDatabaseName();
+    private String getKey(DatabaseInfo databaseInfo) {
+        return RedisKeyConstant.getKey(RedisKeyConstant.JDBC_TEMPLATE + databaseInfo.getDatabaseAddress()
+                + RedisKeyBuilder.SEPARATOR_MH + databaseInfo.getDatabasePort() + RedisKeyBuilder.SEPARATOR_MH + databaseInfo.getDatabaseName());
     }
 }
