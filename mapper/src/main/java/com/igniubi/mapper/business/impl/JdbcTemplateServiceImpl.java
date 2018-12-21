@@ -1,13 +1,8 @@
 package com.igniubi.mapper.business.impl;
+import com.igniubi.mapper.bean.TableBean;
 import com.igniubi.mapper.constant.RedisKeyConstant;
-import com.igniubi.mapper.enums.DatabaseEnum;
-import com.igniubi.model.enums.common.RedisKeyEnum;
-import com.igniubi.redis.operations.RedisValueOperations;
-import com.igniubi.redis.util.RedisKeyBuilder;
-import io.lettuce.core.cluster.RedisClusterURIUtil;
+import com.igniubi.mapper.service.DatabaseInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.jdbc.support.SQLExceptionTranslator;
 
 import com.igniubi.mapper.business.JdbcTemplateService;
 import com.igniubi.mapper.constant.DateSourceConstant;
@@ -18,8 +13,8 @@ import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 /**
  * jdbc 对象维护接口
@@ -32,6 +27,9 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class JdbcTemplateServiceImpl implements JdbcTemplateService {
 
+    @Autowired
+    private DatabaseInfoService databaseInfoService;
+
     /**
      * 维护一个map，用于缓存连接对象
      */
@@ -41,25 +39,40 @@ public class JdbcTemplateServiceImpl implements JdbcTemplateService {
     /**
      * 获取jdbc数据连接
      *
-     * @param databaseInfo
+     * @param id
      * @return JdbcTemplate
      * @author 徐擂
      * @version 1.0.0
      * @date 2018-12-20
      */
-    @Override
-
-    public JdbcTemplate getJdbcTemplate(DatabaseInfo databaseInfo) {
+    private JdbcTemplate getJdbcTemplate(Integer id) {
         // 组装cache-key
-        String cacheKey = getKey(databaseInfo);
+        String cacheKey = getKey(id);
         // 缓存中有则优先从缓存拿
         JdbcTemplate jdbcTemplate = (JdbcTemplate) cacheTemplate.get(cacheKey);
         if (jdbcTemplate == null) {
             // 否则获取连接
+            DatabaseInfo databaseInfo = databaseInfoService.get(id);
             jdbcTemplate = new JdbcTemplate(createDataSource(databaseInfo));
             cacheTemplate.put(cacheKey, jdbcTemplate);
         }
         return jdbcTemplate;
+    }
+
+    /**
+     * 获取数据库所有表结构
+     * <p>
+     *
+     * @param id
+     * @return
+     * @author  徐擂
+     * @date    2018-12-21
+     * @version  1.0.0
+     */
+    @Override
+    public List<TableBean> getTableByDatabaseId(Integer id) {
+        JdbcTemplate jdbcTemplate = getJdbcTemplate(id);
+        return null;
     }
 
     /**
@@ -100,16 +113,15 @@ public class JdbcTemplateServiceImpl implements JdbcTemplateService {
     }
 
     /**
-     * 由 ip + port + 数据库名称 组成唯一key
+     * 由id作为唯一key
      *
-     * @param databaseInfo
+     * @param id
      * @return
      * @author 徐擂
      * @version 1.0.0
      * @date 2018-12-20
      */
-    private String getKey(DatabaseInfo databaseInfo) {
-        return RedisKeyConstant.getKey(RedisKeyConstant.JDBC_TEMPLATE + databaseInfo.getDatabaseAddress()
-                + RedisKeyBuilder.SEPARATOR_MH + databaseInfo.getDatabasePort() + RedisKeyBuilder.SEPARATOR_MH + databaseInfo.getDatabaseName());
+    private String getKey(Integer id) {
+        return RedisKeyConstant.getKey(RedisKeyConstant.JDBC_TEMPLATE + id);
     }
 }

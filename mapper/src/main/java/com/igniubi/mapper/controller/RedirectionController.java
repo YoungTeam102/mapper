@@ -4,6 +4,7 @@ package com.igniubi.mapper.controller;
 import com.igniubi.mapper.business.DatabaseService;
 import com.igniubi.mapper.model.DatabaseInfo;
 import com.igniubi.model.dtos.common.ResultDTO;
+import com.igniubi.model.enums.common.ResultEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -58,11 +59,15 @@ public class RedirectionController {
      */
     @RequestMapping({"/editDatabase/{id}"})
     public String editDatabase(Model model,@PathVariable Integer id){
-        // 通过id查询
         ResultDTO<DatabaseInfo> resultDTO = databaseService.getDatabaseById(id);
-
+        DatabaseInfo databaseInfo = null;
+        if (resultDTO != null && resultDTO.getCode() == ResultEnum.OK.getCode()) {
+            databaseInfo = resultDTO.getData();
+        } else {
+            databaseInfo = new DatabaseInfo();
+        }
+        model.addAttribute("databaseInfo", databaseInfo);
         model.addAttribute("opType", "editDatabase");
-        model.addAttribute("databaseInfo", resultDTO.getData());
         return "dbs/dbsAdd";
     }
 }

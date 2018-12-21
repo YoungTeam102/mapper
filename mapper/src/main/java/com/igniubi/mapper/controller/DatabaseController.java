@@ -1,7 +1,9 @@
 package com.igniubi.mapper.controller;
 
 import com.igniubi.common.page.PagerInfo;
+import com.igniubi.mapper.bean.TableBean;
 import com.igniubi.mapper.business.DatabaseService;
+import com.igniubi.mapper.business.JdbcTemplateService;
 import com.igniubi.mapper.dto.DatabaseInfoQueryReq;
 import com.igniubi.mapper.dto.DatabaseInfoSaveReq;
 import com.igniubi.mapper.enums.LayUIEnum;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -30,6 +33,8 @@ public class DatabaseController {
 
     @Autowired
     private DatabaseService databaseService;
+    @Autowired
+    private JdbcTemplateService jdbcTemplateService;
 
     /**
      * 分页搜索数据库信息
@@ -75,6 +80,25 @@ public class DatabaseController {
     @ResponseBody
     public ResultDTO delDatabase(@PathVariable Integer id){
         return databaseService.delDatabase(id);
+    }
+
+    /**
+     * 查询数据库所有表信息
+     * <p>
+     *
+     * @return RestResult
+     * @author: 张弓
+     * @date:
+     * @version: 1.0.0
+     */
+    @RequestMapping("/listTable/{dbId}")
+    @ResponseBody
+    public ResultDTO list(@PathVariable Integer dbId) {
+        List<TableBean> tableBeanList = null;
+        jdbcTemplateService.getTableByDatabaseId(dbId);
+        // 兼容layui
+        //ResultDTO restResult = RestResult.success().put("data", tableBeanList).put("code", 0);
+        return null;
     }
 
 }
