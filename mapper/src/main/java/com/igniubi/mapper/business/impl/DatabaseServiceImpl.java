@@ -8,6 +8,7 @@ import com.igniubi.mapper.dto.DatabaseInfoQueryReq;
 import com.igniubi.mapper.dto.DatabaseInfoSaveReq;
 import com.igniubi.mapper.model.DatabaseInfo;
 import com.igniubi.mapper.service.DatabaseInfoService;
+import com.igniubi.mapper.util.TestConnectUtil;
 import com.igniubi.model.dtos.common.ResultDTO;
 import com.igniubi.model.enums.common.ResultEnum;
 import org.slf4j.Logger;
@@ -16,7 +17,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.util.List;
 
 /**
  * 业务逻辑层
@@ -76,6 +77,29 @@ public class DatabaseServiceImpl implements DatabaseService {
     }
 
     /**
+     * 查询所有数据库信息列表
+     *
+     * @return ResultDTO<List<DatabaseInfo>>
+     * @author 徐擂
+     * @version 1.0.0
+     * @date 2018-12-23
+     */
+    @Override
+    public ResultDTO<List<DatabaseInfo>> listAllDatabaseInfo(){
+        ResultDTO resultDTO = new ResultDTO();
+        List<DatabaseInfo> databaseList = null;
+        try {
+            databaseList = databaseInfoService.listDatabaseInfo(new DatabaseInfoQueryReq());
+            resultDTO.setData(databaseList);
+        } catch (Exception e) {
+            log.error("查询数据库信息异常", e);
+            resultDTO.setCode(ResultEnum.FAIL.getCode());
+            resultDTO.setMessage(ResultEnum.FAIL.getMsg());
+        }
+        return resultDTO;
+    }
+
+    /**
      * 新增数据库信息
      *
      * @param req
@@ -86,6 +110,9 @@ public class DatabaseServiceImpl implements DatabaseService {
      */
     @Override
     public ResultDTO saveDatabase(DatabaseInfoSaveReq req){
+        if (!TestConnectUtil.isAccessable(req.getDatabaseAddress(), Integer.valueOf(req.getDatabasePort()))) {
+            return new ResultDTO(ResultEnum.SYSTEM_EXCEPTION.getCode(), "数据库连接失败，请确认", null);
+        }
         DatabaseInfo databaseInfo = new DatabaseInfo(req.getSelfDefineName(), req.getDatabaseName(),
                 req.getDatabaseAddress(),req.getUserName(), req.getPassword(), req.getDatabasePort(), req.getDatabaseType(), req.getPackageUrl());
         try {

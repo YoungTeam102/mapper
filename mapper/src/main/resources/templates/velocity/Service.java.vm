@@ -5,10 +5,11 @@ import ${package}.entity.${className}Entity;
 
 /**
  * ${tableComment}
+ * <p>
  * 
  * @author ${author}
- * @email ${email}
  * @date ${datetime}
+ * @version 1.0.0
  */
 public interface ${className}Service extends BaseService<${pkType}, ${className}Entity>{
 

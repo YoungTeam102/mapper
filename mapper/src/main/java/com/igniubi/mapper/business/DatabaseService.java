@@ -6,6 +6,8 @@ import com.igniubi.mapper.dto.DatabaseInfoSaveReq;
 import com.igniubi.mapper.model.DatabaseInfo;
 import com.igniubi.model.dtos.common.ResultDTO;
 
+import java.util.List;
+
 /**
  * 业务逻辑层
  */
@@ -33,6 +35,16 @@ public interface DatabaseService {
      * @date 2018-12-18
      */
     ResultDTO<PagerInfo<DatabaseInfo>> pageDatabaseInfo(DatabaseInfoQueryReq req);
+
+    /**
+     * 查询所有数据库信息列表
+     *
+     * @return ResultDTO<List<DatabaseInfo>>
+     * @author 徐擂
+     * @version 1.0.0
+     * @date 2018-12-23
+     */
+    ResultDTO<List<DatabaseInfo>> listAllDatabaseInfo();
 
     /**
      * 新增数据库信息

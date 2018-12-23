@@ -10,10 +10,14 @@ import com.igniubi.mapper.enums.LayUIEnum;
 import com.igniubi.mapper.model.DatabaseInfo;
 import com.igniubi.model.dtos.common.ResultDTO;
 import com.igniubi.model.enums.common.ResultEnum;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,6 +60,69 @@ public class DatabaseController {
     }
 
     /**
+     * 查询所有数据库信息
+     *
+     * @return
+     */
+    @GetMapping("/listAll")
+    @ResponseBody
+    public Map<String, Object> listAll() {
+        Map<String, Object> dataMap = new HashMap<>();
+        ResultDTO<List<DatabaseInfo>> result = databaseService.listAllDatabaseInfo();
+        if (null != result && result.getCode() == ResultEnum.OK.getCode()) {
+            dataMap.put("data", result.getData());
+        }
+        dataMap.put("code", result.getCode());
+        return dataMap;
+    }
+
+    /**
+     * 查询数据库所有表信息
+     * <p>
+     *
+     * @return RestResult
+     * @author: 徐擂
+     * @date:
+     * @version: 1.0.0
+     */
+    @RequestMapping("/listTable/{id}")
+    @ResponseBody
+    public Map<String, Object> listTable(@PathVariable Integer id) {
+        Map<String, Object> dataMap = new HashMap<>();
+        List<TableBean> tableBeanList = jdbcTemplateService.getTableByDatabaseId(id);
+        if (!CollectionUtils.isEmpty(tableBeanList)) {
+            dataMap.put("code", "0");
+            dataMap.put("data", tableBeanList);
+        }
+        return dataMap;
+    }
+
+    /**
+     * 生成代码
+     * <p>
+     *
+     * @return RestResult
+     * @author: 徐擂
+     * @date:
+     * @version: 1.0.0
+     */
+    @RequestMapping("/genCode")
+    @ResponseBody
+    public void genCode(Integer databaseId, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String[] tableNames = request.getParameterValues("tableName");
+        List<TableBean> tableBeanList = jdbcTemplateService.getTableByDatabaseId(databaseId);
+        // 生成代码
+        byte[] data = jdbcTemplateService.genCode(databaseId,tableNames);
+
+        response.reset();
+        response.setHeader("Content-Disposition", "attachment; filename=\"code.zip\"");
+        response.addHeader("Content-Length", "" + data.length);
+        response.setContentType("application/octet-stream; charset=UTF-8");
+
+        IOUtils.write(data, response.getOutputStream());
+    }
+
+    /**
      * 新增数据库信息
      */
     @PostMapping("/saveDatabase")
@@ -82,23 +149,5 @@ public class DatabaseController {
         return databaseService.delDatabase(id);
     }
 
-    /**
-     * 查询数据库所有表信息
-     * <p>
-     *
-     * @return RestResult
-     * @author: 张弓
-     * @date:
-     * @version: 1.0.0
-     */
-    @RequestMapping("/listTable/{dbId}")
-    @ResponseBody
-    public ResultDTO list(@PathVariable Integer dbId) {
-        List<TableBean> tableBeanList = null;
-        jdbcTemplateService.getTableByDatabaseId(dbId);
-        // 兼容layui
-        //ResultDTO restResult = RestResult.success().put("data", tableBeanList).put("code", 0);
-        return null;
-    }
 
 }

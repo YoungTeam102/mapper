@@ -39,6 +39,10 @@ public class TableBean {
      * 表的列名(不包含主键)
      */
     private List<ColumnBean> columnEntityList;
+    /**
+     * 主键
+     */
+    private ColumnBean pk;
 
     public String getTableName() { return tableName; }
 
@@ -67,4 +71,8 @@ public class TableBean {
     public List<ColumnBean> getColumnEntityList() { return columnEntityList; }
 
     public void setColumnEntityList(List<ColumnBean> columnEntityList) { this.columnEntityList = columnEntityList; }
+
+    public ColumnBean getPk() { return pk; }
+
+    public void setPk(ColumnBean pk) { this.pk = pk; }
 }

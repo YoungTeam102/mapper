@@ -29,4 +29,15 @@ public interface JdbcTemplateService {
      */
     List<TableBean> getTableByDatabaseId(Integer id);
 
+    /**
+     * 代码生成
+     *
+     * @param id
+     * @return byte[]
+     * @author 徐擂
+     * @date 2018-12-21
+     * @version 1.0.0
+     */
+    byte[] genCode(Integer id, String[] tableNames);
+
 }

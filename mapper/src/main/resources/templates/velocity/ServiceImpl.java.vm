@@ -8,7 +8,14 @@ import ${package}.mapper.${className}Mapper;
 import ${package}.entity.${className}Entity;
 import ${package}.service.${className}Service;
 
-
+/**
+ * ${tableComment}
+ * <p>
+ *
+ * @author ${author}
+ * @date ${datetime}
+ * @version 1.0.0
+ */
 @Service("${classname}Service")
 public class ${className}ServiceImpl extends BaseServiceImpl<${pkType}, ${className}Entity> implements ${className}Service, InitializingBean {
 

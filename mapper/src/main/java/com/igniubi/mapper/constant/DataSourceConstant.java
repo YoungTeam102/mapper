@@ -8,7 +8,7 @@ package com.igniubi.mapper.constant;
  * @version 1.0.0
  * @date 2018-12-20
  */
-public class DateSourceConstant {
+public class DataSourceConstant {
 
     /**
      * 驱动类
@@ -24,4 +24,15 @@ public class DateSourceConstant {
      * 数据库类型 mysql:1 oracle:2
      */
     public static final Integer JDBC_TYPE_ORACLE = 2;
+
+    /**
+     * 默认包路径
+     */
+    public static final String PACKAGE_URL_DEFAULT = "com.igniubi.**";
+
+    /**
+     * 默认作者名称
+     */
+    public static final String AUTHOR_DEFAULT = "迈克擂";
+
 }

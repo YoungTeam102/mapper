@@ -10,21 +10,21 @@ layui.config({
 
     //加载数据库
     $.ajax({
-        type: 'POST',
-        url: _contextPath+"/dbs/listAll",
+        type: 'GET',
+        url: "/mapper/database/listAll",
+        data: {"pageSize": 50},
         contentType: "application/json;charset=utf-8",
         success: function (result) {
             if(result.code == 200){
                 var vhtml = '<option value=""></option>';
-                var result = JSON.parse(JSON.stringify(result.webatisDatabases));
+                var result = JSON.parse(JSON.stringify(result.data));
                 if(result.length >0 ){
                     for(var i=0; i<result.length; i++){
-                        vhtml += '<option value="' + result[i].id + '">' + result[i].defineName +'</option>';
+                        vhtml += '<option value="' + result[i].id + '">' + result[i].selfDefineName +'</option>';
                     }
                 }
                 //console.log(vhtml);
-                $("#dbsName").html("");
-                $("#dbsName").append(vhtml);
+                $("#dbsName").html(vhtml);
                 form.render('select', 'dbsName');
                 layer.msg("请选择数据库!");
             }else {
@@ -47,7 +47,7 @@ layui.config({
     });
 
     $("#genCode").click(function () {
-        var vurl = 'genCode';
+        var vurl = '/mapper/database/genCode';
         var values = new Array();
         var value = null;
         var checkStatus = table.checkStatus('tableList');
@@ -67,9 +67,6 @@ layui.config({
     /**
      * ajax请求方式无法下载文件，所以模拟form提交
      * <p>
-     * @author: 张弓
-     * @date:
-     * @version: 1.0.0
      *
      * @param params 所有的参数
      */
@@ -96,7 +93,7 @@ layui.config({
             id: 'tableList'
             ,elem: '#tableList'
             ,height: 332
-            ,url: _contextPath + '/gen/listTable/' + data.value
+            ,url: '/mapper/database/listTable/' + data.value
             ,page: false
             ,cols: [[
                 {checkbox: true}

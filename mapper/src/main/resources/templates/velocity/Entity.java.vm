@@ -9,9 +9,10 @@ import java.math.BigDecimal;
 /**
  * ${tableComment}
  * <p>
+ *
  * @author ${author}
- * @email ${email}
  * @date ${datetime}
+ * @version 1.0.0
  */
 public class ${className}Entity extends BaseEntity {
 	
@@ -19,21 +20,13 @@ public class ${className}Entity extends BaseEntity {
 	/**
 	 * $column.columnComment
  	 */
-	private $column.attrType $column.attrname;
+	private $column.attrType $column.attrNameFirstDown;
 #end
 
 #foreach ($column in $columns)
-	/**
-	 * 设置：${column.columnComment}
-	 */
-	public void set${column.attrName}($column.attrType $column.attrname) {
-		this.$column.attrname = $column.attrname;
-	}
-	/**
-	 * 获取：${column.columnComment}
-	 */
-	public $column.attrType get${column.attrName}() {
-		return $column.attrname;
-	}
+
+	public void set${column.attrNameFirstUp}($column.attrType $column.attrNameFirstDown) { this.$column.attrNameFirstDown = $column.attrNameFirstDown; }
+
+	public $column.attrType get${column.attrNameFirstUp}() {  return $column.attrNameFirstDown;  }
 #end
 }

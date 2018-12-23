@@ -5,10 +5,11 @@ import org.apache.ibatis.annotations.Mapper;
 
 /**
  * ${tableComment}
+ * <p>
  * 
  * @author ${author}
- * @email ${email}
  * @date ${datetime}
+ * @version 1.0.0
  */
 @Mapper
 public interface ${className}Mapper extends BaseMapper<${pkType}, ${className}Entity> {
