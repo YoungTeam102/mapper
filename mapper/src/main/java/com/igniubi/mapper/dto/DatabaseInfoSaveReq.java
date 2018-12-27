@@ -2,6 +2,9 @@ package com.igniubi.mapper.dto;
 
 import com.igniubi.model.dtos.common.BaseDTO;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 
 public class DatabaseInfoSaveReq extends BaseDTO {
 
@@ -10,22 +13,27 @@ public class DatabaseInfoSaveReq extends BaseDTO {
     /**
      * 自定义名称
      */
+    @NotBlank(message = "自定义名称不能为空")
     private String selfDefineName;
     /**
      * 数据库名称
      */
+    @NotBlank(message = "数据库名称不能为空")
     private String databaseName;
     /**
      * 数据库连接地址
      */
+    @NotBlank(message = "数据库连接地址不能为空")
     private String databaseAddress;
     /**
      * 数据库连接端口
      */
+    @NotBlank(message = "数据库连接端口不能为空")
     private String databasePort;
     /**
      * 数据库类型
      */
+    @NotNull(message = "数据库类型不能为空")
     private Integer databaseType;
     /**
      * 生成包路径

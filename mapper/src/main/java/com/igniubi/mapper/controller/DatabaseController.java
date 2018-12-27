@@ -14,6 +14,7 @@ import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -127,7 +128,7 @@ public class DatabaseController {
      */
     @PostMapping("/saveDatabase")
     @ResponseBody
-    public ResultDTO saveDatabase(@RequestBody DatabaseInfoSaveReq req){
+    public ResultDTO saveDatabase(@RequestBody @Validated DatabaseInfoSaveReq req){
         return databaseService.saveDatabase(req);
     }
 
