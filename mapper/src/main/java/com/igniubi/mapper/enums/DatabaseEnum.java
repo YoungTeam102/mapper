@@ -18,7 +18,7 @@ public enum DatabaseEnum {
     private long cacheTime;
     private TimeUnit timeUnit;
 
-    private DatabaseEnum(String cacheKey, long cacheTime, TimeUnit timeUnit) {
+    DatabaseEnum(String cacheKey, long cacheTime, TimeUnit timeUnit) {
         this.cacheKey = cacheKey;
         this.cacheTime = cacheTime;
         this.timeUnit = timeUnit;
