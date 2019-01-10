@@ -76,8 +76,7 @@ public class JdbcTemplateServiceImpl implements JdbcTemplateService {
         JdbcTemplate jdbcTemplate = (JdbcTemplate) cacheTemplate.get(cacheKey);
         if (jdbcTemplate == null) {
             // 否则获取连接
-            DatabaseInfo databaseInfo = databaseInfoService.get(id);
-            jdbcTemplate = new JdbcTemplate(createDataSource(databaseInfo));
+            jdbcTemplate = new JdbcTemplate(createDataSource(databaseInfoService.get(id)));
             cacheTemplate.put(cacheKey, jdbcTemplate);
         }
         return jdbcTemplate;
